@@ -1,6 +1,10 @@
 import Mailbox from "./MailboxProps";
 import Product from "./Product";
 import Books, { type Book } from "./Books";
+import Alert from "./Alert/Alert";
+import Button from "./Button/Button";
+import UserMenu from "./UserMenu/UserMenu";
+import { HiUserCircle, HiOutlineUserGroup } from "react-icons/hi";
 
 const books: Book[] = [
     { id: "id-1", name: "JS for beginners" },
@@ -28,6 +32,16 @@ export default function App() {
             {books.map((book) => (
                 <Books key={book.id} id={book.id} name={book.name} />
             ))}
+            <Alert />
+            <Alert type="success" />
+            <Alert type="error" />
+
+            <Button variant="primary" text="Login" />
+            <Button variant="secondary" text="Follow" />
+
+            <UserMenu name="John Doe" icon={HiUserCircle} />
+            <UserMenu name="Jane Smith" icon={HiOutlineUserGroup} />
+            <UserMenu name="Default User" />
         </>
     );
 }
