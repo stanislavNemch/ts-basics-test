@@ -1,13 +1,28 @@
-import React from "react";
+import toast, { Toaster } from "react-hot-toast";
+import OrderForm from "../OrderForm/OrderForm";
+import UserFormAction from "../UserFormAction/UserFormAction";
+import UserFormEvent from "../UserFormEvent/UserFormEvent";
+import SearchForm from "../SearchForm/SearchForm";
 
-export default function App() {
+const App = () => {
+    const handleOrderFormSubmit = (value: string) => {
+        toast.success(`User name: ${value}`);
+    };
+
+    const handleSearch = async (topic: string) => {
+        // Тут будемо виконувати HTTP-запит
+        toast.success(`Your topic: ${topic}`);
+    };
+
     return (
         <>
-            <h1>Module №3. Part №1</h1>
-            <form>
-                <input type="text" name="username" />
-                <button type="submit">Submit</button>
-            </form>
+            <UserFormEvent />
+            <UserFormAction />
+            <OrderForm onSubmit={handleOrderFormSubmit} />
+            <SearchForm onSubmit={handleSearch} />
+            <Toaster />
         </>
     );
-}
+};
+
+export default App;
