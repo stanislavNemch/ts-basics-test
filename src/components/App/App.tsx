@@ -6,6 +6,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import type { Article } from "../types/articles";
 import { useState } from "react";
 import { fetchArticles } from "../services/articlesService";
+import ArticleSection from "../ArticleSection/ArticleSection";
 
 const App = () => {
     const [articles, setArticles] = useState<Article[]>([]);
@@ -52,20 +53,12 @@ const App = () => {
             <UserFormAction />
             <OrderForm onSubmit={handleOrderFormSubmit} />
             <SearchForm onSubmit={handleSearch} />
-            {loading && <p>Loading articles...</p>}
-            {error && (
-                <p>Whoops, something went wrong! Please try again later.</p>
-            )}
-            {hasSearched && !loading && !error && articles.length === 0 && (
-                <p>There are no such articles, according to your request.</p>
-            )}
-            {articles.length > 0 && (
-                <ul>
-                    {articles.map((article) => (
-                        <li key={article.objectID}>{article.title}</li>
-                    ))}
-                </ul>
-            )}
+            <ArticleSection
+                articles={articles}
+                loading={loading}
+                error={error}
+                hasSearched={hasSearched}
+            />
             <Toaster />
         </>
     );
