@@ -19,7 +19,7 @@ const App = () => {
     };
 
     const handleSearch = async (topic: string) => {
-        const toastId = toast.loading("Loading articles...");
+        const toastId = toast.loading("Loading data, please wait...");
         try {
             setHasSearched(true);
             setArticles([]);

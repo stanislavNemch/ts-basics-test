@@ -1,5 +1,6 @@
 import type { Article } from "../types/articles";
 import ArticleList from "../ArticleList/ArticleList";
+import { PuffLoader } from "react-spinners";
 
 interface ArticleSectionProps {
     articles: Article[];
@@ -15,7 +16,17 @@ const ArticleSection = ({
     hasSearched,
 }: ArticleSectionProps) => {
     if (loading) {
-        return <p>Loading articles...</p>;
+        return (
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "20px",
+                }}
+            >
+                <PuffLoader color="#36d7b7" />
+            </div>
+        );
     }
 
     if (error) {
