@@ -7,6 +7,9 @@ import type { Article } from "../types/articles";
 import { useState } from "react";
 import { fetchArticles } from "../services/articlesService";
 import ArticleSection from "../ArticleSection/ArticleSection";
+import OrderFormRadio from "../OrderFormRadio/OrderFormRadio";
+import OrderFormCheckbox from "../OrderFormCheckbox/OrderFormCheckbox";
+import OrderFormSelect from "../OrderFormSelect/OrderFormSelect";
 
 const App = () => {
     const [articles, setArticles] = useState<Article[]>([]);
@@ -59,6 +62,12 @@ const App = () => {
                 error={error}
                 hasSearched={hasSearched}
             />
+            <hr />
+            <OrderFormRadio />
+            <hr />
+            <OrderFormCheckbox />
+            <hr />
+            <OrderFormSelect />
             <Toaster />
         </>
     );
