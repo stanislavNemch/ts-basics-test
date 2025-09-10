@@ -5,7 +5,7 @@ import App from "./components/App/App.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <h1>Module №3. Part №1</h1>
+        <h1>Module №3. Part №2</h1>
         <App />
     </StrictMode>
 );

@@ -1,76 +1,108 @@
-import toast, { Toaster } from "react-hot-toast";
-import OrderForm from "../OrderForm/OrderForm";
-import UserFormAction from "../UserFormAction/UserFormAction";
-import UserFormEvent from "../UserFormEvent/UserFormEvent";
-import SearchForm from "../SearchForm/SearchForm";
-import type { Article } from "../types/articles";
 import { useState } from "react";
-import { fetchArticles } from "../services/articlesService";
-import ArticleSection from "../ArticleSection/ArticleSection";
-import OrderFormRadio from "../OrderFormRadio/OrderFormRadio";
-import OrderFormCheckbox from "../OrderFormCheckbox/OrderFormCheckbox";
-import OrderFormSelect from "../OrderFormSelect/OrderFormSelect";
+import Timer from "../Timer/Timer";
+import Modal from "../Modal/Modal";
 
-const App = () => {
-    const [articles, setArticles] = useState<Article[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<boolean>(false);
-    const [hasSearched, setHasSearched] = useState<boolean>(false);
+export default function App() {
+    const [isOpen, setIsOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleOrderFormSubmit = (value: string) => {
-        toast.success(`User name: ${value}`);
-    };
+    const openModal = () => setIsModalOpen(true);
 
-    const handleSearch = async (topic: string) => {
-        const toastId = toast.loading("Loading data, please wait...");
-        try {
-            setHasSearched(true);
-            setArticles([]);
-            setError(false);
-            setLoading(true);
-            const data = await fetchArticles(topic);
-            if (data.hits.length === 0) {
-                toast(
-                    "There are no such articles, according to your request.",
-                    { id: toastId }
-                );
-            } else {
-                toast.success("Articles loaded successfully!", { id: toastId });
-            }
-
-            setArticles(data.hits);
-        } catch {
-            setError(true);
-            toast.error(
-                "Whoops, something went wrong! Please try again later.",
-                { id: toastId }
-            );
-        } finally {
-            setLoading(false);
-        }
-    };
+    const closeModal = () => setIsModalOpen(false);
 
     return (
         <>
-            <UserFormEvent />
-            <UserFormAction />
-            <OrderForm onSubmit={handleOrderFormSubmit} />
-            <SearchForm onSubmit={handleSearch} />
-            <ArticleSection
-                articles={articles}
-                loading={loading}
-                error={error}
-                hasSearched={hasSearched}
-            />
-            <hr />
-            <OrderFormRadio />
-            <hr />
-            <OrderFormCheckbox />
-            <hr />
-            <OrderFormSelect />
-            <Toaster />
+            <button onClick={() => setIsOpen(!isOpen)}>
+                {isOpen ? "Hide timer" : "Show timer"}
+            </button>
+            {isOpen && <Timer />}
+
+            <div>
+                <h1>Main content of the page</h1>
+                <button onClick={openModal}>Open modal</button>
+                {isModalOpen && (
+                    <Modal onClose={closeModal}>
+                        <h2>Custom Modal Content</h2>
+                        <p>This is a reusable modal with dynamic content.</p>
+                    </Modal>
+                )}
+            </div>
         </>
     );
-};
+}
 
-export default App;
+// import axios from "axios";
+// import { useEffect, useState } from "react";
+
+// export default function App() {
+//     const [count, setCount] = useState(1);
+//     const [person, setPerson] = useState(null);
+
+//     useEffect(() => {
+//         console.log("Effect ran!");
+//         axios
+//             // 1. Використовуємо count в ефекті
+//             .get(`https://swapi.info/api/people/${count}`)
+//             .then((response) => setPerson(response.data));
+//     }, [count]); // 2. Додаємо count в залежності ефекта
+
+//     console.log("App rendered!");
+
+//     return (
+//         <>
+//             <h2>The count is {count}</h2>
+//             <button onClick={() => setCount(count + 1)}>
+//                 Get next character
+//             </button>
+//             <pre>{JSON.stringify(person, null, 2)}</pre>
+//         </>
+//     );
+// }
+
+// import axios from "axios";
+// import { useEffect, useState } from "react";
+
+// export default function App() {
+//     const [count, setCount] = useState(1);
+//     const [person, setPerson] = useState(null);
+
+//     useEffect(() => {
+//         console.log("Effect ran!");
+//         axios
+//             .get("https://swapi.info/api/people/1")
+//             .then((response) => setPerson(response.data));
+//     }, []); // Порожній масив залежностей
+
+//     console.log("App rendered!");
+
+//     return (
+//         <>
+//             <button onClick={() => setCount(count + 1)}>
+//                 The count is {count}
+//             </button>
+//             <pre>{JSON.stringify(person, null, 2)}</pre>
+//         </>
+//     );
+// }
+
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+
+// export default function App() {
+//     const [person, setPerson] = useState(null);
+
+//     useEffect(() => {
+//         console.log("Effect ran!");
+//         axios
+//             .get("https://swapi.info/api/people/1")
+//             .then((response) => setPerson(response.data));
+//     }, []);
+
+//     console.log("App rendred!");
+
+//     return (
+//         <>
+//             <pre>{JSON.stringify(person, null, 2)}</pre>
+//         </>
+//     );
+// }
